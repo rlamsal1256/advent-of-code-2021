@@ -7,11 +7,10 @@ end
 def solve(part, input)
   (low, high) = input.minmax
   (low..high).map do |pos|
-    if part == 1
-      fuel = input.map{ |i| (i - pos).abs }.inject(:+)
-    else
-      fuel = input.map{ |i| nth_triangular_number((i - pos).abs) }.inject(:+)
-    end
+    fuel = input.map do |i|
+      diff = (i - pos).abs
+      part == 1 ? diff : nth_triangular_number(diff)
+    end.inject(:+)
     [pos, fuel]
   end.min_by{ |_a, b| b }[1]
 end
